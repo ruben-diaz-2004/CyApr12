@@ -14,6 +14,8 @@
 #include <iostream>
 #include <vector>
 
+#define MAX_SZ 3
+#define MAX_PREC 0
 
 #pragma once
 
@@ -40,7 +42,7 @@ namespace CyA {
       void quickHull(void);
  
       void write_hull(std::ostream &os) const;
-      void write(std::ostream &os) const;
+      // void write(std::ostream &os) const;
  
       inline const point_vector& get_hull(void) const { return hull_; }
       inline const point_vector& get_points(void) const { return *this; }
@@ -55,3 +57,9 @@ namespace CyA {
       bool farthest_point(const line &l, int side, point &farthest) const;
   };
 }
+
+std::ostream& operator<<(std::ostream& os, const CyA::point_vector& ps);
+std::ostream& operator<<(std::ostream& os, const CyA::point& ps);
+
+std::istream& operator>>(std::istream& is, CyA::point_vector& ps);
+std::istream& operator>>(std::istream& is, CyA::point& ps);

@@ -9,7 +9,6 @@
   * @brief Este programa obtiene el Euclidean minimum spanning tree (EMST)
   *  de un conjunto de puntos en dos dimensiones (2D)
   */
-
 #include <iostream>
 #include <fstream>
 #include "parameters.cc"
@@ -17,15 +16,29 @@
 #include <sstream>
 #include <string>
 
+
+
 int main(int argc, char *argv[]) {
   CheckCorrectParameters(argc, argv, 3);
 
   std::ifstream input_TM{argv[1]};
   std::ofstream output_tape{argv[2]};
 
+  std::string line;
+  std::stringstream ss;
+
+  while (std::getline(input_TM, line)) {
+    if (line[0] != '#') {
+      ss << line << std::endl;
+    }
+  }
 
 
+  CyA::point_vector points;
+  ss >> points;
 
-
+  CyA::point_set ps(points);
+  ps.write_hull(output_tape);
+  
   return 0;
 }
