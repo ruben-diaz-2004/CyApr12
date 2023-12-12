@@ -12,13 +12,13 @@ CXXFLAGS = -Wall -std=c++17 -g
 
 
 
-all: NFA2DFA
+all: QuickHull
 
-NFA2DFA: EMST_main.cc point_set.cc
+QuickHull: EMST_main.cc point_set.cc
 		$(CXX) $(CXXFLAGS) -o $@ $^
 	
 
 	
 .PHONY: all clean
 clean:
-		rm -f NFA2DFA
+		rm -f QuickHull

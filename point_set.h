@@ -23,6 +23,7 @@ namespace CyA {
   typedef std::pair<double,double> point;
   typedef std::pair<point, point> line;
   typedef std::vector<point> point_vector;
+  typedef std::vector<line> line_vector;
  
   enum side {
     LEFT = -1,
@@ -34,6 +35,7 @@ namespace CyA {
   class point_set : public point_vector {
     private:
       point_vector hull_;
+      line_vector lines_;
  
     public:
       point_set(const vector<point> &points);
@@ -42,11 +44,11 @@ namespace CyA {
       void quickHull(void);
  
       void write_hull(std::ostream &os) const;
-      // void write(std::ostream &os) const;
+      void write(std::ostream &os) const;
  
       inline const point_vector& get_hull(void) const { return hull_; }
       inline const point_vector& get_points(void) const { return *this; }
- 
+      void point_find(const CyA::point &p, int &i) const;
     private:
       void quickHull(const line &l, int side);
  

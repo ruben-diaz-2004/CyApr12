@@ -121,9 +121,16 @@ void CyA::point_set::quickHull(const CyA::line &l, int side) {
   } else {
       hull_.push_back(l.first);
       hull_.push_back(l.second);
+      lines_.push_back(l);
     }
 }
 
+
+
+/**
+ * @brief Imprime los puntos del conjunto
+ * @param os Flujo de salida
+ */
 
 void CyA::point_set::write_hull(std::ostream &os) const {
   os << hull_.size() << std::endl;
@@ -133,6 +140,46 @@ void CyA::point_set::write_hull(std::ostream &os) const {
   }
 }
 
+
+
+/**
+ * @brief Imprime los puntos en formato .dot
+*/
+void CyA::point_set::write(std::ostream &os) const {
+  CyA::point_vector points = get_points();
+
+  os << "graph{ " << std::endl << std::endl;
+
+  for (int i = 0; i < size(); i++) {
+    os << " " << i << " [pos = \"" << (*this)[i].first << "," << (*this)[i].second << "!\"]" << std::endl;
+  }
+
+  os << std::endl;
+
+  // Imprimir líneas
+  for (const CyA::line &l : lines_) {
+    int i, j;
+    point_find(l.first, i);
+    point_find(l.second, j);
+
+    os << " " << i << " -- " << j << std::endl;
+  }
+
+
+  os << "}" << std::endl;
+}
+
+
+void CyA::point_set::point_find(const CyA::point &p, int &i) const {
+  i = 0;
+  for (const CyA::point &p_i : *this) {
+    if (p_i == p) {
+      return;
+    }
+    i++;
+  }
+  i = -1;
+}
 
 std::ostream& operator<<(std::ostream& os, const CyA::point_vector& ps)
 {

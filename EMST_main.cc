@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
   ss >> points;
 
   CyA::point_set ps(points);
-  ps.write_hull(output_tape);
+  ps.write(output_tape);
   
   return 0;
 }
