@@ -5,10 +5,10 @@
   * Computabilidad y Algoritmia 2023-2024
   *
   * @author Rubén Díaz Marrero 
-  * @date 04/12/2023
-  * @brief Este programa obtiene el Euclidean minimum spanning tree (EMST)
-  *  de un conjunto de puntos en dos dimensiones (2D)
+  * @date 18/12/2023
+  * @brief Este programa obtiene el conjunto convexo de un conjunto de puntos en dos dimensiones (2D)
   */
+
 #include <iostream>
 #include <fstream>
 #include "parameters.cc"
@@ -28,9 +28,7 @@ int main(int argc, char *argv[]) {
   std::stringstream ss;
 
   while (std::getline(input_TM, line)) {
-    if (line[0] != '#') {
-      ss << line << std::endl;
-    }
+    ss << line << std::endl;
   }
 
 

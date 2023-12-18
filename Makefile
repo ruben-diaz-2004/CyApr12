@@ -4,7 +4,7 @@
 # Asignatura: Computabilidad y Algoritmia
 # 
 # @author Rubén Díaz Marrero
-# @date 25/09/2023
+# @date 18/12/2023
 # 
 
 CXX = g++
@@ -14,7 +14,7 @@ CXXFLAGS = -Wall -std=c++17 -g
 
 all: QuickHull
 
-QuickHull: EMST_main.cc point_set.cc
+QuickHull: Hull_main.cc point_set.cc
 		$(CXX) $(CXXFLAGS) -o $@ $^
 	
 

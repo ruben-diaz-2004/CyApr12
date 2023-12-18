@@ -5,9 +5,8 @@
   * Computabilidad y Algoritmia 2023-2024
   *
   * @author Rubén Díaz Marrero 
-  * @date 04/12/2023
-  * @brief Este programa obtiene el Euclidean minimum spanning tree (EMST)
-  *  de un conjunto de puntos en dos dimensiones (2D)
+  * @date 18/12/2023
+  * @brief Este programa obtiene el conjunto convexo de un conjunto de puntos en dos dimensiones (2D)
   */
 
 
@@ -19,17 +18,28 @@
 #include "point_set.h"
 
 
-
+/**
+ * @brief Constructor de la clase point_set
+*/
 CyA::point_set::point_set(const std::vector<CyA::point> &points) : point_vector(points) {
   quickHull();
 }
 
 
+/**
+ * @brief Destructor de la clase point_set
+*/
 CyA::point_set::~point_set(void) {
   hull_.clear();
 }
 
 
+/**
+ * @brief Calcula la distancia entre un punto y una línea
+ * @param l Línea
+ * @param p Punto
+ * @return Distancia entre el punto y la línea
+*/
 double CyA::point_set::distance(const CyA::line &l, const CyA::point &p) const {
   double A = l.second.second - l.first.second;
   double B = l.first.first - l.second.first;
@@ -41,6 +51,12 @@ double CyA::point_set::distance(const CyA::line &l, const CyA::point &p) const {
 }
 
 
+/**
+ * @brief Calcula el lado de un punto respecto a una línea
+ * @param l Línea
+ * @param p Punto
+ * @return Lado del punto respecto a la línea
+*/
 int CyA::point_set::find_side(const CyA::line &l, const CyA::point &p) const {
   double A = l.second.second - l.first.second;
   double B = l.first.first - l.second.first;
@@ -52,6 +68,11 @@ int CyA::point_set::find_side(const CyA::line &l, const CyA::point &p) const {
 }
 
 
+/**
+ * @brief Calcula los puntos más a la izquierda y a la derecha
+ * @param min_x Punto más a la izquierda
+ * @param max_x Punto más a la derecha
+*/
 void CyA::point_set::x_bounds(CyA::point &min_x, CyA::point &max_x) const {
   min_x = max_x = *this->begin();
 
@@ -65,6 +86,13 @@ void CyA::point_set::x_bounds(CyA::point &min_x, CyA::point &max_x) const {
 }
 
 
+
+/**
+ * @brief Calcula la distancia entre un punto y una línea
+ * @param l Línea
+ * @param p Punto
+ * @return Distancia entre el punto y la línea
+*/
 double CyA::point_set::point_2_line(const CyA::line &l, const CyA::point &p) const {
   double A = l.second.second - l.first.second;
   double B = l.first.first - l.second.first;
@@ -76,6 +104,14 @@ double CyA::point_set::point_2_line(const CyA::line &l, const CyA::point &p) con
 }
 
 
+
+/**
+ * @brief Calcula el punto más lejano a una línea
+ * @param l Línea
+ * @param side Lado de la línea
+ * @param farthest Punto más lejano
+ * @return true si se ha encontrado un punto, false en caso contrario
+*/
 bool CyA::point_set::farthest_point(const CyA::line &l, int side, CyA::point &farthest) const {
   double max_distance = 0.0;
   bool found = false;
@@ -95,6 +131,9 @@ bool CyA::point_set::farthest_point(const CyA::line &l, int side, CyA::point &fa
 
 
 
+/**
+ * @brief Calcula el conjunto convexo
+*/
 void CyA::point_set::quickHull(void) {
   hull_.clear();
 
@@ -112,6 +151,12 @@ void CyA::point_set::quickHull(void) {
 }
 
 
+
+/**
+ * @brief Calcula el conjunto convexo
+ * @param l Línea
+ * @param side Lado de la línea
+*/
 void CyA::point_set::quickHull(const CyA::line &l, int side) {
   CyA::point farthest;
 
@@ -170,6 +215,12 @@ void CyA::point_set::write(std::ostream &os) const {
 }
 
 
+
+/**
+ * @brief Busca un punto en el conjunto
+ * @param p Punto
+ * @param i Índice del punto
+*/
 void CyA::point_set::point_find(const CyA::point &p, int &i) const {
   i = 0;
   for (const CyA::point &p_i : *this) {
@@ -181,6 +232,12 @@ void CyA::point_set::point_find(const CyA::point &p, int &i) const {
   i = -1;
 }
 
+
+
+/**
+ * @brief Imprime los puntos del conjunto
+ * @param os Flujo de salida
+ */
 std::ostream& operator<<(std::ostream& os, const CyA::point_vector& ps)
 {
     os << ps.size() << std::endl;
@@ -193,6 +250,11 @@ std::ostream& operator<<(std::ostream& os, const CyA::point_vector& ps)
     return os;
 }
 
+
+/**
+ * @brief Imprime un punto
+ * @param os Flujo de salida
+ */
 std::ostream& operator<<(std::ostream& os, const CyA::point& p)
 {
     os << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC) << p.first << "\t" << std::setw(MAX_SZ) << std::fixed << std::setprecision(MAX_PREC) << p.second;
@@ -201,6 +263,10 @@ std::ostream& operator<<(std::ostream& os, const CyA::point& p)
 }
 
 
+/**
+ * @brief Lee los puntos del conjunto
+ * @param is Flujo de entrada
+ */
 std::istream& operator>>(std::istream& is, CyA::point_vector& ps)
 {
     int n;
@@ -219,6 +285,11 @@ std::istream& operator>>(std::istream& is, CyA::point_vector& ps)
     return is;
 }
 
+
+/**
+ * @brief Lee un punto
+ * @param is Flujo de entrada
+ */
 std::istream& operator>>(std::istream& is, CyA::point& p)
 {
     is >> p.first >> p.second;
